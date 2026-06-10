@@ -1,7 +1,6 @@
 /**
  * Email Service
- * Handles sending boarding pass emails to guests
- * Provider-agnostic — swap SendGrid/Mailgun/SES by changing config
+ * Handles sending boarding pass emails with zone-based GIFs
  */
 
 const SquawkCodeFormatter = require('../pin-service/squawkCodeFormatter');
@@ -16,26 +15,29 @@ class EmailService {
     }
 
     /**
-     * Builds the complete boarding pass email payload
+     * Builds the boarding pass email payload
      * @param {object} guest - Guest information
-     * @param {string} guest.email - Guest email address
+     * @param {string} guest.email - Guest email
      * @param {string} guest.name - Guest full name
-     * @param {string} guest.buildingBlock - Building identifier (e.g., "A", "Block B")
+     * @param {number} guest.buildingNumber - Building number (71-98)
      * @param {string} guest.checkInDate - Check-in date
      * @param {string} guest.pin - Door access PIN
-     * @param {string} guest.gifUrl - URL to personalized animated map GIF
-     * @returns {object} Email payload ready for sending
+     * @param {string} guest.gifUrl - URL to zone animated map GIF
+     * @param {string} guest.zone - Zone letter for display
+     * @returns {object} Email payload
      */
     buildBoardingPassEmail(guest) {
         
         const squawkVars = SquawkCodeFormatter.getEmailVariables(guest.pin);
+        const buildingDisplay = `Building ${guest.buildingNumber} (Zone ${guest.zone})`;
         
-        // Template variables to inject into HTML
         const templateVars = {
             guestName: guest.name,
             checkInDate: guest.checkInDate,
             checkInTime: this.checkInTime,
-            buildingBlock: guest.buildingBlock,
+            buildingBlock: buildingDisplay,
+            buildingNumber: guest.buildingNumber,
+            zone: guest.zone,
             squawkCode: squawkVars.squawkCode,
             gifUrl: guest.gifUrl,
             validityPeriod: squawkVars.validityPeriod
@@ -44,17 +46,14 @@ class EmailService {
         return {
             to: guest.email,
             from: `${this.fromName} <${this.fromEmail}>`,
-            subject: `✈️ Your Runway1331 Boarding Pass - Gate ${guest.buildingBlock}`,
+            subject: `✈️ Your Runway1331 Boarding Pass - Building ${guest.buildingNumber}`,
             templateVars: templateVars,
-            // Plain text fallback
             text: this.buildPlainTextVersion(templateVars)
         };
     }
 
     /**
-     * Builds plain text fallback for email clients that don't render HTML
-     * @param {object} vars - Template variables
-     * @returns {string} Plain text email
+     * Plain text fallback
      */
     buildPlainTextVersion(vars) {
         return `
@@ -62,11 +61,11 @@ class EmailService {
 
 Guest: ${vars.guestName}
 Date: ${vars.checkInDate}
-Gate: ${vars.buildingBlock}
+Building: ${vars.buildingNumber} (Zone ${vars.zone})
 
 YOUR SQUAWK CODE: ${vars.squawkCode}
 
-Upon arrival, locate Building ${vars.buildingBlock} and enter 
+Upon arrival, locate Building ${vars.buildingNumber} and enter 
 your squawk code at the door keypad. Code activates at 
 ${vars.checkInTime} on ${vars.checkInDate}.
 
@@ -76,19 +75,8 @@ Need assistance? Reply to this email or call +852 XXXX XXXX.
         `.trim();
     }
 
-    /**
-     * Placeholder for actual email sending
-     * Replace with SendGrid/Mailgun/SES API call
-     * @param {object} emailPayload - From buildBoardingPassEmail()
-     * @returns {Promise<object>} Send result
-     */
     async send(emailPayload) {
         // TODO: Integrate with email provider API
-        // Example with SendGrid:
-        // const sgMail = require('@sendgrid/mail');
-        // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        // return sgMail.send(emailPayload);
-        
         console.log('Email ready to send:', {
             to: emailPayload.to,
             subject: emailPayload.subject
