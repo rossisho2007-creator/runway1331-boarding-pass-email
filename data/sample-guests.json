@@ -1,0 +1,34 @@
+{
+  "guests": [
+    {
+      "email": "emily.chen@example.com",
+      "name": "Emily Chen",
+      "buildingNumber": 71,
+      "checkInDate": "15 December 2024"
+    },
+    {
+      "email": "james.wong@example.com",
+      "name": "James Wong",
+      "buildingNumber": 77,
+      "checkInDate": "15 December 2024"
+    },
+    {
+      "email": "sarah.li@example.com",
+      "name": "Sarah Li",
+      "buildingNumber": 84,
+      "checkInDate": "16 December 2024"
+    },
+    {
+      "email": "mike.chan@example.com",
+      "name": "Mike Chan",
+      "buildingNumber": 91,
+      "checkInDate": "16 December 2024"
+    },
+    {
+      "email": "lisa.ho@example.com",
+      "name": "Lisa Ho",
+      "buildingNumber": 98,
+      "checkInDate": "17 December 2024"
+    }
+  ]
+}
