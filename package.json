@@ -1,0 +1,30 @@
+{
+  "name": "runway1331-boarding-pass",
+  "version": "1.0.0",
+  "description": "Aviation-themed email delivery system for Runway1331 guest check-in",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "test": "jest",
+    "send:test": "node scripts/test-email.js",
+    "gif:generate": "node scripts/generate-sample-gif.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rossisho2007/runway1331-boarding-pass.git"
+  },
+  "keywords": [
+    "email",
+    "hospitality",
+    "wayfinding",
+    "aviation-theme"
+  ],
+  "author": "Runway1331 Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.5.0"
+  }
+}
