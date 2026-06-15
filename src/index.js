@@ -9,6 +9,7 @@ const RoomCodeGenerator = require('./pin-service/roomCodeGenerator');
 const TemplateEngine = require('./email-service/templateEngine');
 const StaffAlertService = require('./staff-alert/alertService');
 const QRRenderer = require('./qr-generator/renderQR');
+const LogoEmbedder = require('./email-service/logoEmbedder');
 const fs = require('fs');
 const path = require('path');
 
@@ -16,9 +17,14 @@ class BoardingPassSystem {
     
     constructor(config) {
         config = config || {};
+        
+        var logoEmbedder = new LogoEmbedder();
+        var logoBase64 = logoEmbedder.getLogoBase64();
+        
         this.emailService = new EmailService({
-            logoUrl: config.logoUrl || 'https://runway1331.com/logo.png'
+            logoUrl: logoBase64 || config.logoUrl || 'https://runway1331.com/logo.png'
         });
+        
         this.chaosMap = new ChaosMapGenerator();
         this.templateEngine = new TemplateEngine();
         this.staffAlert = new StaffAlertService({
@@ -37,10 +43,8 @@ class BoardingPassSystem {
 
     async processGuest(guest) {
         
-        // Generate PIN (random unless provided)
         var pin = guest.pin || SquawkCodeFormatter.generatePin();
         
-        // Generate room code (random unless provided)
         var roomAssignment;
         if (guest.roomCode) {
             roomAssignment = {
@@ -58,16 +62,13 @@ class BoardingPassSystem {
             );
         }
         
-        // Get navigation data
         var navigation = this.chaosMap.generateNavigation(guest.buildingNumber);
         
-        // Get QR code for this building
         var qrData = null;
         if (this.qrCodes) {
             qrData = await this.qrRenderer.getQRForBuilding(guest.buildingNumber, this.qrCodes);
         }
         
-        // Build email
         var email = this.emailService.buildChaosEmail({
             email: guest.email,
             name: guest.name,
