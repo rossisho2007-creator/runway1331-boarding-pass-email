@@ -24,7 +24,10 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "nodemon": "^2.0.22",
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
   }
 }

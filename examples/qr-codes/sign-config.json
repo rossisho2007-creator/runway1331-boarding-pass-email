@@ -1,0 +1,178 @@
+[
+  {
+    "direction": "N",
+    "angle": 0,
+    "group": null,
+    "buildings": [],
+    "qrURL": "https://runway1331.com/navigate?direction=N",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"N\",\"angle\":0,\"group\":null,\"buildings\":[],\"displayText\":\"Direction: N (unused)\"}",
+    "filename": "qr-direction-n.png",
+    "label": "UNUSED - N",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "N",
+      "angle": 0,
+      "group": null,
+      "buildings": [],
+      "displayText": "Direction: N (unused)"
+    },
+    "isUsed": false
+  },
+  {
+    "direction": "NE",
+    "angle": 45,
+    "group": "B",
+    "buildings": [
+      91,
+      92
+    ],
+    "qrURL": "https://runway1331.com/navigate?direction=NE&group=B&buildings=91,92",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"NE\",\"angle\":45,\"group\":\"B\",\"buildings\":[91,92],\"displayText\":\"Group B Buildings 91, 92\"}",
+    "filename": "qr-direction-ne.png",
+    "label": "GROUP B NE (Buildings 91, 92)",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "NE",
+      "angle": 45,
+      "group": "B",
+      "buildings": [
+        91,
+        92
+      ],
+      "displayText": "Group B Buildings 91, 92"
+    },
+    "isUsed": true
+  },
+  {
+    "direction": "E",
+    "angle": 90,
+    "group": null,
+    "buildings": [],
+    "qrURL": "https://runway1331.com/navigate?direction=E",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"E\",\"angle\":90,\"group\":null,\"buildings\":[],\"displayText\":\"Direction: E (unused)\"}",
+    "filename": "qr-direction-e.png",
+    "label": "UNUSED - E",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "E",
+      "angle": 90,
+      "group": null,
+      "buildings": [],
+      "displayText": "Direction: E (unused)"
+    },
+    "isUsed": false
+  },
+  {
+    "direction": "SE",
+    "angle": 135,
+    "group": "D",
+    "buildings": [
+      93,
+      94
+    ],
+    "qrURL": "https://runway1331.com/navigate?direction=SE&group=D&buildings=93,94",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"SE\",\"angle\":135,\"group\":\"D\",\"buildings\":[93,94],\"displayText\":\"Group D Buildings 93, 94\"}",
+    "filename": "qr-direction-se.png",
+    "label": "GROUP D SE (Buildings 93, 94)",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "SE",
+      "angle": 135,
+      "group": "D",
+      "buildings": [
+        93,
+        94
+      ],
+      "displayText": "Group D Buildings 93, 94"
+    },
+    "isUsed": true
+  },
+  {
+    "direction": "S",
+    "angle": 180,
+    "group": null,
+    "buildings": [],
+    "qrURL": "https://runway1331.com/navigate?direction=S",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"S\",\"angle\":180,\"group\":null,\"buildings\":[],\"displayText\":\"Direction: S (unused)\"}",
+    "filename": "qr-direction-s.png",
+    "label": "UNUSED - S",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "S",
+      "angle": 180,
+      "group": null,
+      "buildings": [],
+      "displayText": "Direction: S (unused)"
+    },
+    "isUsed": false
+  },
+  {
+    "direction": "SW",
+    "angle": 225,
+    "group": "C",
+    "buildings": [
+      85,
+      86
+    ],
+    "qrURL": "https://runway1331.com/navigate?direction=SW&group=C&buildings=85,86",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"SW\",\"angle\":225,\"group\":\"C\",\"buildings\":[85,86],\"displayText\":\"Group C Buildings 85, 86\"}",
+    "filename": "qr-direction-sw.png",
+    "label": "GROUP C SW (Buildings 85, 86)",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "SW",
+      "angle": 225,
+      "group": "C",
+      "buildings": [
+        85,
+        86
+      ],
+      "displayText": "Group C Buildings 85, 86"
+    },
+    "isUsed": true
+  },
+  {
+    "direction": "W",
+    "angle": 270,
+    "group": null,
+    "buildings": [],
+    "qrURL": "https://runway1331.com/navigate?direction=W",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"W\",\"angle\":270,\"group\":null,\"buildings\":[],\"displayText\":\"Direction: W (unused)\"}",
+    "filename": "qr-direction-w.png",
+    "label": "UNUSED - W",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "W",
+      "angle": 270,
+      "group": null,
+      "buildings": [],
+      "displayText": "Direction: W (unused)"
+    },
+    "isUsed": false
+  },
+  {
+    "direction": "NW",
+    "angle": 315,
+    "group": "A",
+    "buildings": [
+      83,
+      84
+    ],
+    "qrURL": "https://runway1331.com/navigate?direction=NW&group=A&buildings=83,84",
+    "qrContent": "{\"action\":\"POINT\",\"direction\":\"NW\",\"angle\":315,\"group\":\"A\",\"buildings\":[83,84],\"displayText\":\"Group A Buildings 83, 84\"}",
+    "filename": "qr-direction-nw.png",
+    "label": "GROUP A NW (Buildings 83, 84)",
+    "signCommand": {
+      "action": "POINT",
+      "direction": "NW",
+      "angle": 315,
+      "group": "A",
+      "buildings": [
+        83,
+        84
+      ],
+      "displayText": "Group A Buildings 83, 84"
+    },
+    "isUsed": true
+  }
+]
