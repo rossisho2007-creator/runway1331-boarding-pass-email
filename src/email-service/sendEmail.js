@@ -1,47 +1,67 @@
 /**
  * Email Service
- * Handles sending boarding pass emails with zone-based GIFs
+ * Runway1331 Boarding Pass Email System
+ * 
+ * Contact Info:
+ *   General: info@runway1331.com.hk
+ *   Reservations: +852 5635 7131 / rsvn@runway1331.com.hk
+ *   Address: Shing Fung Rd, Kai Tak, Hong Kong
  */
 
 const SquawkCodeFormatter = require('../pin-service/squawkCodeFormatter');
 
 class EmailService {
     
-    constructor(config = {}) {
+    constructor(config) {
+        config = config || {};
         this.provider = config.provider || 'sendgrid';
-        this.fromEmail = config.fromEmail || 'checkin@runway1331.com';
+        this.fromEmail = config.fromEmail || 'rsvn@runway1331.com.hk';
         this.fromName = config.fromName || 'Runway1331';
         this.checkInTime = config.checkInTime || '15:00';
         this.logoUrl = config.logoUrl || 'https://runway1331.com/logo.png';
+        this.replyTo = config.replyTo || 'rsvn@runway1331.com.hk';
+        this.contactPhone = config.contactPhone || '+852 5635 7131';
+        this.contactEmail = config.contactEmail || 'info@runway1331.com.hk';
+        this.address = config.address || 'Shing Fung Rd, Kai Tak, Hong Kong';
     }
 
-    /**
-     * Builds the boarding pass email payload
-     * @param {object} guest - Guest information
-     * @returns {object} Email payload
-     */
-    buildBoardingPassEmail(guest) {
+    buildChaosEmail(guest) {
         
-        const squawkVars = SquawkCodeFormatter.getEmailVariables(guest.pin);
-        const buildingDisplay = `Building ${guest.buildingNumber} (Zone ${guest.zone})`;
+        var squawkVars = SquawkCodeFormatter.getEmailVariables(guest.pin);
+        var nav = guest.navigation;
+        var roomCode = guest.roomCode || 'G01';
+        var buildingDisplay = nav.buildingNumber + ' - ' + roomCode + ' (Group ' + nav.group + ')';
         
-        const templateVars = {
+        var templateVars = {
             logoUrl: this.logoUrl,
             guestName: guest.name,
-            checkInDate: guest.checkInDate,
+            checkInDate: guest.checkInDate || 'Today',
             checkInTime: this.checkInTime,
             buildingBlock: buildingDisplay,
-            buildingNumber: guest.buildingNumber,
-            zone: guest.zone,
+            buildingNumber: nav.buildingNumber,
+            roomCode: roomCode,
+            group: nav.group,
+            compass: nav.compass,
+            angle: nav.angle,
+            zone: nav.zone,
+            zoneColor: nav.zoneColor,
             squawkCode: squawkVars.squawkCode,
             gifUrl: guest.gifUrl,
-            validityPeriod: squawkVars.validityPeriod
+            validityPeriod: squawkVars.validityPeriod,
+            pathInstructions: nav.pathInstructions,
+            directionDisplay: nav.directionDisplay,
+            qrDataURL: guest.qrDataURL || '',
+            qrDirection: guest.qrDirection || '',
+            contactPhone: this.contactPhone,
+            contactEmail: this.contactEmail,
+            address: this.address
         };
 
         return {
             to: guest.email,
-            from: `${this.fromName} <${this.fromEmail}>`,
-            subject: `✈️ Your Runway1331 Boarding Pass - Building ${guest.buildingNumber}`,
+            from: this.fromName + ' <' + this.fromEmail + '>',
+            replyTo: this.replyTo,
+            subject: 'Your Runway1331 Boarding Pass - ' + nav.buildingNumber + ' - ' + roomCode + ' (Group ' + nav.group + ')',
             templateVars: templateVars,
             text: this.buildPlainTextVersion(templateVars)
         };
@@ -51,31 +71,37 @@ class EmailService {
         return [
             '=== RUNWAY1331 BOARDING PASS ===',
             '',
-            `Guest: ${vars.guestName}`,
-            `Date: ${vars.checkInDate}`,
-            `Building: ${vars.buildingNumber} (Zone ${vars.zone})`,
+            'Guest: ' + vars.guestName,
+            'Date: ' + vars.checkInDate,
+            'Building: ' + vars.buildingNumber + ' - ' + vars.roomCode,
+            'Group: ' + vars.group + ' (' + vars.compass + ')',
             '',
-            `YOUR SQUAWK CODE: ${vars.squawkCode}`,
+            'YOUR SQUAWK CODE: ' + vars.squawkCode,
             '',
-            `Upon arrival, locate Building ${vars.buildingNumber} and enter`,
-            `your squawk code at the door keypad. Code activates at`,
-            `${vars.checkInTime} on ${vars.checkInDate}.`,
+            'Find the spinning sign and scan the QR code.',
+            'Sign will point to Group ' + vars.group + '.',
+            'Building number on front, room code on back.',
             '',
-            `Route map: ${vars.gifUrl}`,
+            '---',
+            'Runway1331',
+            'Shing Fung Rd, Kai Tak, Hong Kong',
+            'Tel/WhatsApp: +852 5635 7131',
+            'Email: rsvn@runway1331.com.hk',
+            '---',
             '',
-            'Need assistance? Reply to this email or call +852 XXXX XXXX.'
+            'Need assistance? Reply to this email or call us.'
         ].join('\n');
     }
 
-    async send(emailPayload) {
+    send(emailPayload) {
         console.log('Email ready to send:', {
             to: emailPayload.to,
-            subject: emailPayload.subject
+            subject: emailPayload.subject,
+            from: emailPayload.from
         });
-        
         return {
             success: true,
-            message: 'Email prepared (provider not configured)',
+            message: 'Email prepared',
             to: emailPayload.to
         };
     }
