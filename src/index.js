@@ -32,7 +32,10 @@ class BoardingPassSystem {
         });
         this.qrRenderer = new QRRenderer();
         this.roomGenerator = new RoomCodeGenerator();
-        this.gifBaseUrl = config.gifBaseUrl || 'https://runway1331.com/gifs';
+        
+        // Base URL for GIFs hosted on GitHub
+        this.gifBaseUrl = config.gifBaseUrl || 
+            'https://raw.githubusercontent.com/rossisho2007-creator/runway1331-boarding-pass-email/feature/white-fuchsia-redesign/src/email-templates/assets/gifs';
         
         this.qrCodes = null;
         var qrDataPath = path.join(__dirname, '..', 'examples', 'qr-codes', 'qr-codes-data.json');
@@ -69,11 +72,14 @@ class BoardingPassSystem {
             qrData = await this.qrRenderer.getQRForBuilding(guest.buildingNumber, this.qrCodes);
         }
         
+        // Full URL to the building's GIF
+        var gifUrl = this.gifBaseUrl + '/' + navigation.gifFilename;
+        
         var email = this.emailService.buildChaosEmail({
             email: guest.email,
             name: guest.name,
             pin: pin,
-            gifUrl: this.gifBaseUrl + '/' + navigation.gifFilename,
+            gifUrl: gifUrl,
             navigation: navigation,
             checkInDate: guest.checkInDate || 'Today',
             roomCode: roomAssignment.roomCode,
