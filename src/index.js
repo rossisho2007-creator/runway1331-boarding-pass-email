@@ -1,7 +1,3 @@
-/**
- * Runway1331 Boarding Pass System
- */
-
 const EmailService = require('./email-service/sendEmail');
 const ChaosMapGenerator = require('./gif-generator/chaos-map-generator');
 const SquawkCodeFormatter = require('./pin-service/squawkCodeFormatter');
@@ -10,6 +6,7 @@ const TemplateEngine = require('./email-service/templateEngine');
 const StaffAlertService = require('./staff-alert/alertService');
 const QRRenderer = require('./qr-generator/renderQR');
 const LogoEmbedder = require('./email-service/logoEmbedder');
+const GifEmbedder = require('./email-service/gifEmbedder');
 const fs = require('fs');
 const path = require('path');
 
@@ -21,21 +18,17 @@ class BoardingPassSystem {
         var logoEmbedder = new LogoEmbedder();
         var logoBase64 = logoEmbedder.getLogoBase64();
         
+        this.gifEmbedder = new GifEmbedder();
+        
         this.emailService = new EmailService({
             logoUrl: logoBase64 || config.logoUrl || 'https://runway1331.com/logo.png'
         });
         
         this.chaosMap = new ChaosMapGenerator();
         this.templateEngine = new TemplateEngine();
-        this.staffAlert = new StaffAlertService({
-            alertEmail: config.alertEmail || 'rsvn@runway1331.com.hk'
-        });
+        this.staffAlert = new StaffAlertService({ alertEmail: 'rsvn@runway1331.com.hk' });
         this.qrRenderer = new QRRenderer();
         this.roomGenerator = new RoomCodeGenerator();
-        
-        // Base URL for GIFs hosted on GitHub
-        this.gifBaseUrl = config.gifBaseUrl || 
-            'https://raw.githubusercontent.com/rossisho2007-creator/runway1331-boarding-pass-email/feature/white-fuchsia-redesign/src/email-templates/assets/gifs';
         
         this.qrCodes = null;
         var qrDataPath = path.join(__dirname, '..', 'examples', 'qr-codes', 'qr-codes-data.json');
@@ -59,10 +52,7 @@ class BoardingPassSystem {
                 label: String(guest.buildingNumber).padStart(3, '0') + ' - ' + guest.roomCode
             };
         } else {
-            roomAssignment = this.roomGenerator.generateRoomAssignment(
-                guest.buildingNumber,
-                guest.floor || null
-            );
+            roomAssignment = this.roomGenerator.generateRoomAssignment(guest.buildingNumber, guest.floor || null);
         }
         
         var navigation = this.chaosMap.generateNavigation(guest.buildingNumber);
@@ -72,14 +62,13 @@ class BoardingPassSystem {
             qrData = await this.qrRenderer.getQRForBuilding(guest.buildingNumber, this.qrCodes);
         }
         
-        // Full URL to the building's GIF
-        var gifUrl = this.gifBaseUrl + '/' + navigation.gifFilename;
+        var gifBase64 = this.gifEmbedder.getGifBase64(guest.buildingNumber);
         
         var email = this.emailService.buildChaosEmail({
             email: guest.email,
             name: guest.name,
             pin: pin,
-            gifUrl: gifUrl,
+            gifUrl: gifBase64 || '',
             navigation: navigation,
             checkInDate: guest.checkInDate || 'Today',
             roomCode: roomAssignment.roomCode,
