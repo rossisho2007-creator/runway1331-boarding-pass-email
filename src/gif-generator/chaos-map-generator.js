@@ -1,122 +1,54 @@
 /**
  * RUNWAY1331 CHAOS MAP GENERATOR
- * 
- * PROPERTY LAYOUT:
- *   LEFT SIDE: Buildings 83-86
- *   RIGHT SIDE: Buildings 91-94
- *   MIDDLE: Reception desk + Fake plane
- * 
- * CURRENT BUILDINGS: 83, 84, 85, 86, 91, 92, 93, 94
- * Each building has its own GIF
+ * 8 compass directions for spinning sign
  */
 
 class ChaosMapGenerator {
     
     constructor() {
         
-        // Direct building-to-GIF mapping (no groups)
         this.buildings = {
-            83: {
-                buildingNumber: 83,
-                compass: 'NW',
-                angle: 315,
-                location: 'top-left',
-                descriptionEN: 'Northwest - top left area',
-                descriptionTC: '西北 - 左上區域',
-                descriptionSC: '西北 - 左上区域',
-                pathFromReception: 'Walk LEFT from reception, then toward the BACK.'
-            },
-            84: {
-                buildingNumber: 84,
-                compass: 'NW',
-                angle: 315,
-                location: 'top-left',
-                descriptionEN: 'Northwest - top left area',
-                descriptionTC: '西北 - 左上區域',
-                descriptionSC: '西北 - 左上区域',
-                pathFromReception: 'Walk LEFT from reception, then toward the BACK.'
-            },
-            85: {
-                buildingNumber: 85,
-                compass: 'SW',
-                angle: 225,
-                location: 'bottom-left',
-                descriptionEN: 'Southwest - bottom left area',
-                descriptionTC: '西南 - 左下區域',
-                descriptionSC: '西南 - 左下区域',
-                pathFromReception: 'Walk LEFT from reception, stay toward the FRONT.'
-            },
-            86: {
-                buildingNumber: 86,
-                compass: 'SW',
-                angle: 225,
-                location: 'bottom-left',
-                descriptionEN: 'Southwest - bottom left area',
-                descriptionTC: '西南 - 左下區域',
-                descriptionSC: '西南 - 左下区域',
-                pathFromReception: 'Walk LEFT from reception, stay toward the FRONT.'
-            },
-            91: {
-                buildingNumber: 91,
-                compass: 'NE',
-                angle: 45,
-                location: 'top-right',
-                descriptionEN: 'Northeast - top right area',
-                descriptionTC: '東北 - 右上區域',
-                descriptionSC: '东北 - 右上区域',
-                pathFromReception: 'Walk RIGHT from reception (past the plane), then toward the BACK.'
-            },
-            92: {
-                buildingNumber: 92,
-                compass: 'NE',
-                angle: 45,
-                location: 'top-right',
-                descriptionEN: 'Northeast - top right area',
-                descriptionTC: '東北 - 右上區域',
-                descriptionSC: '东北 - 右上区域',
-                pathFromReception: 'Walk RIGHT from reception (past the plane), then toward the BACK.'
-            },
-            93: {
-                buildingNumber: 93,
-                compass: 'SE',
-                angle: 135,
-                location: 'bottom-right',
-                descriptionEN: 'Southeast - bottom right area',
-                descriptionTC: '東南 - 右下區域',
-                descriptionSC: '东南 - 右下区域',
-                pathFromReception: 'Walk RIGHT from reception (past the plane), stay toward the FRONT.'
-            },
-            94: {
-                buildingNumber: 94,
-                compass: 'SE',
-                angle: 135,
-                location: 'bottom-right',
-                descriptionEN: 'Southeast - bottom right area',
-                descriptionTC: '東南 - 右下區域',
-                descriptionSC: '东南 - 右下区域',
-                pathFromReception: 'Walk RIGHT from reception (past the plane), stay toward the FRONT.'
-            }
-        };
-
-        this.landmarks = {
-            reception: {
-                id: 'reception',
-                nameEN: 'Reception Desk',
-                nameTC: '接待處',
-                nameSC: '接待处'
-            },
-            plane: {
-                id: 'plane',
-                nameEN: 'Fake Plane',
-                nameTC: '飛機模型',
-                nameSC: '飞机模型'
-            },
-            spinningSign: {
-                id: 'spinning-sign',
-                nameEN: 'Spinning Direction Sign',
-                nameTC: '旋轉指示牌',
-                nameSC: '旋转指示牌'
-            }
+            // Northwest (315deg) - Top Left
+            83: { compass: 'NW', angle: 315, description: 'Northwest - top left' },
+            84: { compass: 'NW', angle: 315, description: 'Northwest - top left' },
+            // Southwest (225deg) - Bottom Left
+            85: { compass: 'SW', angle: 225, description: 'Southwest - bottom left' },
+            86: { compass: 'SW', angle: 225, description: 'Southwest - bottom left' },
+            // Northeast (45deg) - Top Right
+            91: { compass: 'NE', angle: 45, description: 'Northeast - top right' },
+            92: { compass: 'NE', angle: 45, description: 'Northeast - top right' },
+            // Southeast (135deg) - Bottom Right
+            93: { compass: 'SE', angle: 135, description: 'Southeast - bottom right' },
+            94: { compass: 'SE', angle: 135, description: 'Southeast - bottom right' },
+            // West (270deg) - Left side
+            71: { compass: 'W', angle: 270, description: 'West - left side' },
+            72: { compass: 'W', angle: 270, description: 'West - left side' },
+            73: { compass: 'W', angle: 270, description: 'West - left side' },
+            74: { compass: 'W', angle: 270, description: 'West - left side' },
+            75: { compass: 'W', angle: 270, description: 'West - left side' },
+            76: { compass: 'W', angle: 270, description: 'West - left side' },
+            77: { compass: 'W', angle: 270, description: 'West - left side' },
+            78: { compass: 'W', angle: 270, description: 'West - left side' },
+            // East (90deg) - Right side
+            99: { compass: 'E', angle: 90, description: 'East - right side' },
+            100: { compass: 'E', angle: 90, description: 'East - right side' },
+            101: { compass: 'E', angle: 90, description: 'East - right side' },
+            102: { compass: 'E', angle: 90, description: 'East - right side' },
+            103: { compass: 'E', angle: 90, description: 'East - right side' },
+            104: { compass: 'E', angle: 90, description: 'East - right side' },
+            105: { compass: 'E', angle: 90, description: 'East - right side' },
+            106: { compass: 'E', angle: 90, description: 'East - right side' },
+            107: { compass: 'E', angle: 90, description: 'East - right side' },
+            108: { compass: 'E', angle: 90, description: 'East - right side' },
+            // South (180deg) - Bottom
+            87: { compass: 'S', angle: 180, description: 'South - bottom' },
+            88: { compass: 'S', angle: 180, description: 'South - bottom' },
+            89: { compass: 'S', angle: 180, description: 'South - bottom' },
+            90: { compass: 'S', angle: 180, description: 'South - bottom' },
+            95: { compass: 'S', angle: 180, description: 'South - bottom' },
+            96: { compass: 'S', angle: 180, description: 'South - bottom' },
+            97: { compass: 'S', angle: 180, description: 'South - bottom' },
+            98: { compass: 'S', angle: 180, description: 'South - bottom' }
         };
     }
 
@@ -125,81 +57,16 @@ class ChaosMapGenerator {
         var building = this.buildings[buildingNumber];
         
         if (!building) {
-            throw new Error(
-                'Building ' + buildingNumber + ' not found. ' +
-                'Available: 83, 84, 85, 86, 91, 92, 93, 94'
-            );
+            throw new Error('Building ' + buildingNumber + ' not found.');
         }
-        
-        var passesPlane = building.location.includes('right');
         
         return {
-            buildingNumber: building.buildingNumber,
+            buildingNumber: buildingNumber,
             compass: building.compass,
             angle: building.angle,
-            location: building.location,
-            zone: 'red',
-            zoneColor: '#C41E3A',
-            
-            // Each building has its own GIF now
             gifFilename: 'building-' + buildingNumber + '.gif',
-            
-            directionDisplay: building.descriptionEN + ' (' + building.compass + ')',
-            pathInstructions: building.pathFromReception,
-            
-            visibleLandmarks: [
-                this.landmarks.reception,
-                ...(passesPlane ? [this.landmarks.plane] : []),
-                this.landmarks.spinningSign
-            ],
-            
-            pathSequence: this.generatePathSequence(building),
-            textDirections: this.buildTextDirections(building),
-            
-            qrCompass: building.compass,
-            qrAngle: building.angle
+            description: building.description
         };
-    }
-
-    generatePathSequence(building) {
-        var steps = [{ step: 1, type: 'start', location: 'Reception Desk' }];
-        
-        if (building.location.includes('right')) {
-            steps.push({ step: 2, type: 'waypoint', location: 'Fake Plane (walk past it)' });
-        }
-        
-        steps.push({
-            step: steps.length + 1,
-            type: 'direction',
-            location: 'Walk ' + (building.location.includes('left') ? 'LEFT' : 'RIGHT') + 
-                     ' toward the ' + (building.location.includes('top') ? 'BACK' : 'FRONT')
-        });
-        
-        steps.push({
-            step: steps.length + 1,
-            type: 'end',
-            location: 'Building ' + building.buildingNumber + ' (' + building.compass + ')'
-        });
-        
-        return steps;
-    }
-
-    buildTextDirections(building) {
-        return [
-            '=== BUILDING ' + building.buildingNumber + ' (' + building.compass + ') ===',
-            '',
-            'FROM RECEPTION:',
-            building.pathFromReception,
-            '',
-            'Look for the spinning sign and scan the QR code in your email.',
-            'Building number on front, room code on back.',
-            '',
-            'LOST? Return to reception (middle of property, near the plane).'
-        ].join('\n');
-    }
-
-    listAllBuildings() {
-        return Object.keys(this.buildings).map(Number);
     }
 }
 
