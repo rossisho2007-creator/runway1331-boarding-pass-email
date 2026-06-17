@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Runway1331 - QR Code Sheet (8 Directions)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+        .card { border: 2px solid #333; padding: 15px; text-align: center; page-break-inside: avoid; }
+        .card img { width: 150px; height: 150px; }
+        .card h3 { margin: 5px 0; }
+        .card p { margin: 2px 0; font-size: 12px; color: #666; }
+        .active { border-color: #D4117B; background: #FFF0F5; }
+        .reserved { border-color: #ccc; background: #f9f9f9; }
+        @media print { body { margin: 0; } .card { break-inside: avoid; } }
+    </style>
+</head>
+<body>
+    <h1>Runway1331 - Spinning Sign QR Codes</h1>
+    <p style="text-align:center;">Print this sheet. Cut out each QR code and attach to the sign face.</p>
+    
+    <div class="grid">
+        <div class="card reserved">
+            <img src="qr-direction-n.png" alt="N">
+            <h3>N - North</h3>
+            <p>Angle: 0&deg;</p>
+            <p>RESERVED</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-ne.png" alt="NE">
+            <h3>NE - Northeast</h3>
+            <p>Angle: 45&deg;</p>
+            <p>Buildings: 91-92</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-e.png" alt="E">
+            <h3>E - East</h3>
+            <p>Angle: 90&deg;</p>
+            <p>Buildings: 99-108</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-se.png" alt="SE">
+            <h3>SE - Southeast</h3>
+            <p>Angle: 135&deg;</p>
+            <p>Buildings: 93-94</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-s.png" alt="S">
+            <h3>S - South</h3>
+            <p>Angle: 180&deg;</p>
+            <p>Buildings: 87-90, 95-98</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-sw.png" alt="SW">
+            <h3>SW - Southwest</h3>
+            <p>Angle: 225&deg;</p>
+            <p>Buildings: 85-86</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-w.png" alt="W">
+            <h3>W - West</h3>
+            <p>Angle: 270&deg;</p>
+            <p>Buildings: 71-78</p>
+        </div>
+        <div class="card active">
+            <img src="qr-direction-nw.png" alt="NW">
+            <h3>NW - Northwest</h3>
+            <p>Angle: 315&deg;</p>
+            <p>Buildings: 83-84</p>
+        </div>
+    </div>
+</body>
+</html>

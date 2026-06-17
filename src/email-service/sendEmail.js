@@ -40,7 +40,7 @@ class EmailService {
             buildingBlock: buildingDisplay,
             buildingNumber: nav.buildingNumber,
             roomCode: roomCode,
-            group: nav.group,
+            
             compass: nav.compass,
             angle: nav.angle,
             zone: nav.zone,
