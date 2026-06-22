@@ -1,71 +1,105 @@
-# Runway1331 Boarding Pass Email System
+# ✈️ Runway1331 Boarding Pass Email System
 
-An aviation-themed email delivery system that sends guests a personalized "Boarding Pass" with an animated path map (GIF) and PIN code displayed as a "squawk code."
+An aviation-themed email delivery system that sends guests a personalized "Boarding Pass" with an animated map, QR code for the spinning sign, and PIN code displayed as a "squawk code."
 
-## What We're Building
-- ✈️ Aviation-themed responsive HTML email template
-- 🗺️ Personalized animated GIF showing path from reception to guest's door
-- 🔢 PIN delivery system formatted as aviation squawk codes
-- 🔌 Integration-ready PIN generation (TBA door system)
+---
 
-## Current Phase
-Email design and delivery system with manual/templated GIFs. Door system integration is TBA (they haven't installed the new doors yet).
+## The Problem
 
-### Future Phase
-Programmatic GIF generation and real-time door system API integration.
+Guests arriving at Runway1331 struggle with navigation due to:
+- No street names or building numbers (handwritten A4 paper only)
+- Uniform architecture across buildings
+- Only 1 staff member on duty
+- 30+ guests getting lost daily
+
+## The Solution
+
+A fused wayfinding system:
+- 🎨 **Aviation-themed email** with Runway1331 branding (white + fuchsia)
+- 🗺️ **Animated GIF** showing path from reception to guest's building
+- 🔢 **Squawk code PIN** for door access
+- 📱 **QR code** that controls a physical spinning sign
+- 🚨 **Staff Alert button** for lost guests
+- 🌐 **Trilingual** (English, Traditional Chinese, Simplified Chinese)
+
+---
+
+## How It Works
+
+### The Spinning Sign
+
+8 QR codes, one per compass direction. The sign has a camera that reads the QR code from the guest's email, extracts the direction and angle, and a motor spins the sign to point the way.
+
+| Direction | Angle | Buildings |
+|-----------|-------|-----------|
+| N | 0° | Reserved |
+| NE | 45° | 91, 92 |
+| E | 90° | 99–108 |
+| SE | 135° | 93, 94 |
+| S | 180° | 87–90, 95–98 |
+| SW | 225° | 85, 86 |
+| W | 270° | 71–78 |
+| NW | 315° | 83, 84 |
+
+---
 
 ## Project Structure
+
 runway1331-boarding-pass/
-├── docs/ # Design system & documentation
 ├── src/
-│ ├── email-templates/ # HTML email designs
-│ ├── email-service/ # Email sending logic
-│ ├── gif-generator/ # Animated map creation
-│ └── pin-service/ # PIN generation & formatting
-├── design-assets/ # Figma exports & design files
-├── tests/ # Testing files
-└── examples/ # Sample outputs
+│ ├── email-templates/
+│ │ ├── boarding-pass.html # Email HTML template
+│ │ └── assets/
+│ │ ├── logo.jpg # Runway1331 logo
+│ │ └── gifs/ # Animated building GIFs
+│ ├── email-service/
+│ │ ├── sendEmail.js # Email builder
+│ │ ├── templateEngine.js # Variable replacer
+│ │ ├── logoEmbedder.js # Base64 logo embedding
+│ │ └── gifEmbedder.js # Base64 GIF embedding
+│ ├── gif-generator/
+│ │ └── chaos-map-generator.js # Building → compass mapping
+│ ├── pin-service/
+│ │ ├── squawkCodeFormatter.js # PIN → squawk code
+│ │ └── roomCodeGenerator.js # Random room codes (G01–G29)
+│ ├── qr-generator/
+│ │ ├── generateQR.js # QR data generator
+│ │ └── renderQR.js # QR image renderer
+│ ├── staff-alert/
+│ │ └── alertService.js # Lost guest alerts
+│ └── index.js # Main system
+├── scripts/
+│ ├── test-full-system.js # Test all 7 directions
+│ ├── send-to-danica.js # Single guest test
+│ └── generate-all-qrs.js # Generate QR PNGs
+├── examples/
+│ ├── sample-emails/ # Generated email previews
+│ └── qr-codes/ # QR code PNGs + print sheet
+├── docs/
+│ └── email-design-system.md # Design specifications
+└── data/
+└── sample-guests.json # Test data
 
-## Design Inspirations
-
-### The Silveri (MGallery) - Tung Chung
-- Aviation luxury design language
-- Boarding pass/passport-style artifacts
-- Subtle, sophisticated aviation theming
-
-### K11 Artus - Tsim Sha Tsui  
-- Digital "Arrival Guide" with custom property illustration
-- Architectural map showing tower, lift lobby, mall relationship
-- Bespoke design delivered pre-arrival
+---
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- An email testing service account (Litmus/Email on Acid recommended)
+- Node.js (v16+)
+- npm
 
 ### Installation
 ```bash
-# Clone the repository
-git clone https://github.com/YOUR-USERNAME/runway1331-boarding-pass.git
-
-# Navigate to project
-cd runway1331-boarding-pass
-
-# Install dependencies
+git clone https://github.com/rossisho2007-creator/runway1331-boarding-pass-email.git
+cd runway1331-boarding-pass-email
 npm install
 
-# Copy environment file
-cp .env.example .env
+## Generate Test Emails
 
-# Configure your .env with email service credentials
+node scripts/test-full-system.js
+npx serve examples/sample-emails
 
-# Run email template preview server
-npm run dev
+## Generate QR Codes
 
-# Test email sending (development mode)
-npm run send:test
-
-# Generate sample GIF
-npm run gif:generate
+node scripts/generate-all-qrs.js
+npx serve examples/qr-codes
